@@ -12,7 +12,8 @@
 </head>
 
 <body id="body-interno">
-    <h1 class="boasvindas">Seja bem-vindo(a), <?php echo $_SESSION["name"]?></h1>
+    <h1 class="boasvindas">Seja bem-vindo(a), <?php echo $result["nome"]?></h1>
+    <a class="dados" href="/alterar-usuario">ALTERAR DADOS CADASTRAIS</a>
     <div id="textint">
       <h3>AGRICULTURA</h3>
       <p>Agricultura é a prática do cultivo do solo com o objetivo de produzir alimentos

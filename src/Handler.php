@@ -76,6 +76,8 @@ class Handler
                 $_SESSION["id"] = $user["id"];
                 $_SESSION["name"] = $user["nome"];
                 $_SESSION["email"] = $user["email"];
+                $_SESSION["senha"] = $user["senha"];
+                $_SESSION["idade"] = $user["idade"];
 
                 header("Location: /interno");
                 die();
@@ -94,8 +96,49 @@ class Handler
                 die();
             }
 
+            $sql = "SELECT * FROM usuarios WHERE id = :id";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(":id", $_SESSION["id"], PDO::PARAM_INT);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+
             require_once(__DIR__."/../views/interno.php");
             return;
+        }
+
+        if($metodo == "GET" && $recurso == "/alterar-usuario")
+        {
+            session_start();
+            require_once(__DIR__."/../views/alterar-usuario.php");
+            return;
+        }
+
+        if($metodo == "POST" && $recurso == "/alterar-usuario")
+        {
+            session_start();
+            $id = $_SESSION["id"];
+            $nome = $_POST["nome"];
+            $email = $_POST["email"];
+            $idade = $_POST["idade"];
+            $senha = password_hash($_POST["senha"], PASSWORD_BCRYPT);
+
+            $sql = "UPDATE usuarios SET nome = :nome, email = :email, senha = :senha, idade = :idade WHERE id = :id";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(":nome", $nome, PDO::PARAM_STR);
+            $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+            $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+            $stmt->bindParam(":idade", $idade, PDO::PARAM_INT);
+            $stmt->bindParam(":senha", $senha, PDO::PARAM_STR);
+
+            $stmt->execute();
+            header("Location: /interno");
+            die();
+
+
         }
     }
 }

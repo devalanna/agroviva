@@ -280,7 +280,7 @@ a{
 
 .boasvindas{
   color: rgb(4, 61, 4);
-  text-align: right;
+  text-align: left;
 }
 
 #textint{
@@ -289,6 +289,21 @@ a{
 
 #textint h3{
   text-align: center;
+}
+
+.container{
+  max-width: 920px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.dados{
+  color: rgb(52, 187, 52);
+  text-align: left;
 }
 
 
